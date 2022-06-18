@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,11 @@ namespace DataAccess.Concrete.InMemory
         {
             _products = new List<Product>() {
 
-            new Product{Id=1,CategoryId=1,ProductName="Bardak", UnitPrice=15, UnitsInStock=15},
-            new Product{Id=2,CategoryId=1,ProductName="Kamera", UnitPrice=500, UnitsInStock=3},
-            new Product{Id=3,CategoryId=2,ProductName="Telefon", UnitPrice=1500, UnitsInStock=2},
-            new Product{Id=4,CategoryId=2,ProductName="Klavye", UnitPrice=150, UnitsInStock=65},
-            new Product{Id=5,CategoryId=2,ProductName="Fare", UnitPrice=85, UnitsInStock=1}
-
+            new Product{ProductId=1,CategoryId=1,ProductName="Bardak", UnitPrice=15, UnitsInStock=15},
+            new Product{ProductId=2,CategoryId=1,ProductName="Kamera", UnitPrice=500, UnitsInStock=3},
+            new Product{ProductId=3,CategoryId=2,ProductName="Telefon", UnitPrice=1500, UnitsInStock=2},
+            new Product{ProductId=4,CategoryId=2,ProductName="Klavye", UnitPrice=150, UnitsInStock=65},
+            new Product{ProductId=5,CategoryId=2,ProductName="Fare", UnitPrice=85, UnitsInStock=1}
 
             };
         }
@@ -32,12 +32,12 @@ namespace DataAccess.Concrete.InMemory
             _products.Add(product);
         }
 
-        public void Delete(Product product)
+        public void Delete(Product product)         
         {
 
-            Product productToDelete;
+            //Product productToDelete=null;
 
-            product = _products.SingleOrDefault(p=>p.Id == product.Id);
+            product = _products.SingleOrDefault(p=>p.ProductId == product.ProductId);
 
             //Long way of LINQ (Language Integration Query)
             //Product tempProduct=null;
@@ -77,13 +77,18 @@ namespace DataAccess.Concrete.InMemory
 
         }
 
+        public List<ProductDetailDto> GetProductDetailDtos()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Product product)
         {
 
             Product productToUpdate = null;
-            productToUpdate = _products.SingleOrDefault(p=>p.Id == product.Id);
+            productToUpdate = _products.SingleOrDefault(p=>p.ProductId == product.ProductId);
 
-            productToUpdate.Id = product.Id;
+            productToUpdate.ProductId = product.ProductId;
             productToUpdate.ProductName = product.ProductName; 
 
             //Product productToUpdate=null;

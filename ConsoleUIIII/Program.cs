@@ -1,18 +1,48 @@
 ﻿using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using System;
 
 namespace ConsoleUIIII
 {
+
+    //SOLID 
+    // (O)pen Closed Principle
     class Program
     {
         static void Main(string[] args)
         {
-            ProductManager productManager = new ProductManager(new InMemoryProductDal());
+            ProductTest();
+            //CategoryTest();
+            //IoC
 
-            foreach (var product in productManager.GetAll())
+        }
+
+        static void CategoryTest()
+        {
+            CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+            foreach (var category in categoryManager.GetAll())
             {
-                Console.WriteLine(product.ProductName);
+                Console.WriteLine(category.CategoryName + '/' + category.CategoryName);
+            }
+        }
+
+        static void ProductTest()
+        {
+            ProductManager productManager = new ProductManager(new EfProductDal());
+
+            var result = productManager.GetProductDetailDtos();
+            if (result.Success == true)
+            {
+                foreach (var item in result.Data)
+                {
+                    Console.WriteLine(item.ProductName + "/" + item.CategoryName);
+                }
+            }
+
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
     }
