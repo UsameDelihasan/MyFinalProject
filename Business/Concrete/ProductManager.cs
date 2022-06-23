@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.AutoFac;
 using Business.CCS;
 using Business.Constant;
 using Business.ValidationRules.FluentValidation;
@@ -30,6 +31,23 @@ namespace Business.Concrete
 
         //validation bir Cross Cutting Concern ' dir
 
+
+
+
+        /* Encryption --> key ile kilitlersiniz
+          
+         ,
+         
+          
+         Hashing --> MD5 , SHA1 gibi şifreleme algoritmaları vasıtasıyla geri dönüşü olmayacak şekilde şifrelerler
+        
+               kendimiz şifreyi daha sağlam hale getirmek için. "salting" yaparak kullacının yazdığı şifreye eklenti yapıyoruz 
+         
+         */
+
+
+        //claim
+        [SecuredOperation("product.add")]
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
